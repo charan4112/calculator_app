@@ -17,15 +17,29 @@ class ButtonWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.all(8),
+        margin: const EdgeInsets.all(10),
+        height: 70,
+        width: 70,
         decoration: BoxDecoration(
-          color: Colors.grey[800],
+          color: Colors.grey[900],
           shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 8,
+              offset: const Offset(2, 2),
+            ),
+          ],
         ),
         alignment: Alignment.center,
         child: Text(
           label,
-          style: TextStyle(fontSize: 24, color: color),
+          style: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
         ),
       ),
     );

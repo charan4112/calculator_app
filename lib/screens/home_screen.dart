@@ -11,11 +11,18 @@ class HomeScreen extends StatelessWidget {
     final calculator = Provider.of<CalculatorProvider>(context);
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: calculator.isDarkMode ? Colors.black : Colors.white,
       appBar: AppBar(
         title: const Text('Calculator'),
-        backgroundColor: Colors.grey[900],
+        backgroundColor: calculator.isDarkMode ? Colors.grey[900] : Colors.blueGrey[200],
         actions: [
+          IconButton(
+            icon: Icon(
+              calculator.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+              color: Colors.white,
+            ),
+            onPressed: () => calculator.toggleTheme(),
+          ),
           IconButton(
             icon: const Icon(Icons.delete, color: Colors.white),
             onPressed: () => calculator.clearHistory(),
@@ -24,7 +31,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // Display Area with Glassmorphism Effect
+          // Display Area
           Container(
             padding: const EdgeInsets.all(20),
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -32,14 +39,6 @@ class HomeScreen extends StatelessWidget {
               color: Colors.white.withOpacity(0.1),
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: Colors.white.withOpacity(0.2)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 8,
-                  spreadRadius: 2,
-                  offset: const Offset(2, 2),
-                ),
-              ],
             ),
             alignment: Alignment.bottomRight,
             child: Column(
@@ -48,12 +47,12 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Text(
                   calculator.input,
-                  style: const TextStyle(fontSize: 28, color: Colors.white),
+                  style: TextStyle(fontSize: 28, color: calculator.isDarkMode ? Colors.white : Colors.black),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   calculator.output,
-                  style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: calculator.isDarkMode ? Colors.white : Colors.black),
                 ),
               ],
             ),
@@ -67,14 +66,14 @@ class HomeScreen extends StatelessWidget {
                 return ListTile(
                   title: Text(
                     calculator.history[index],
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: calculator.isDarkMode ? Colors.white : Colors.black),
                   ),
                 );
               },
             ),
           ),
 
-          // Memory Functions Row (MC, M+, M-, MR)
+          // Memory Functions
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -85,7 +84,7 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
 
-          // Calculator buttons
+          // Calculator Buttons
           Container(
             padding: const EdgeInsets.all(8.0),
             child: GridView.count(
@@ -106,21 +105,7 @@ class HomeScreen extends StatelessWidget {
                 ButtonWidget(label: '9', onTap: () => calculator.addInput('9')),
                 ButtonWidget(label: '*', color: Colors.orange, onTap: () => calculator.addInput('*')),
 
-                ButtonWidget(label: '4', onTap: () => calculator.addInput('4')),
-                ButtonWidget(label: '5', onTap: () => calculator.addInput('5')),
-                ButtonWidget(label: '6', onTap: () => calculator.addInput('6')),
-                ButtonWidget(label: '-', color: Colors.orange, onTap: () => calculator.addInput('-')),
-
-                ButtonWidget(label: '1', onTap: () => calculator.addInput('1')),
-                ButtonWidget(label: '2', onTap: () => calculator.addInput('2')),
-                ButtonWidget(label: '3', onTap: () => calculator.addInput('3')),
-                ButtonWidget(label: '+', color: Colors.orange, onTap: () => calculator.addInput('+')),
-
-                ButtonWidget(label: '0', onTap: () => calculator.addInput('0')),
-                ButtonWidget(label: '.', onTap: () => calculator.addInput('.')),
-                ButtonWidget(label: '=', color: Colors.green, onTap: () {
-                  calculator.addInput("=");
-                }),
+                ButtonWidget(label: '=', color: Colors.green, onTap: () => calculator.addInput("=")),
               ],
             ),
           ),
