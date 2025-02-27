@@ -24,9 +24,16 @@ class HomeScreen extends StatelessWidget {
             onPressed: () => calculator.toggleTheme(),
           ),
           IconButton(
+            icon: Icon(
+              calculator.isScientificMode ? Icons.calculate : Icons.functions,
+              color: Colors.white,
+            ),
+            onPressed: () => calculator.toggleScientificMode(),
+          ),
+          IconButton(
             icon: const Icon(Icons.delete, color: Colors.white),
             onPressed: () => calculator.clearHistory(),
-          )
+          ),
         ],
       ),
       body: Column(
@@ -58,57 +65,20 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          // History Panel
-          Expanded(
-            child: ListView.builder(
-              itemCount: calculator.history.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    calculator.history[index],
-                    style: TextStyle(color: calculator.isDarkMode ? Colors.white : Colors.black),
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // Memory Functions
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ButtonWidget(label: 'MC', color: Colors.blue, onTap: () => calculator.memoryClear()),
-              ButtonWidget(label: 'M+', color: Colors.blue, onTap: () => calculator.memoryAdd()),
-              ButtonWidget(label: 'M-', color: Colors.blue, onTap: () => calculator.memorySubtract()),
-              ButtonWidget(label: 'MR', color: Colors.blue, onTap: () => calculator.memoryRecall()),
-            ],
-          ),
-
-          // Calculator Buttons
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 4,
+          // Scientific Mode Toggle Buttons
+          if (calculator.isScientificMode)
+            Wrap(
+              spacing: 10,
               children: [
-                ButtonWidget(label: 'C', color: Colors.red, onTap: () => calculator.clearInput()),
-                ButtonWidget(label: '⌫', onTap: () {
-                  if (calculator.input.isNotEmpty) {
-                    calculator.addInput(calculator.input.substring(0, calculator.input.length - 1));
-                  }
-                }),
-                ButtonWidget(label: '%', onTap: () => calculator.addInput('%')),
-                ButtonWidget(label: '/', color: Colors.orange, onTap: () => calculator.addInput('/')),
-
-                ButtonWidget(label: '7', onTap: () => calculator.addInput('7')),
-                ButtonWidget(label: '8', onTap: () => calculator.addInput('8')),
-                ButtonWidget(label: '9', onTap: () => calculator.addInput('9')),
-                ButtonWidget(label: '*', color: Colors.orange, onTap: () => calculator.addInput('*')),
-
-                ButtonWidget(label: '=', color: Colors.green, onTap: () => calculator.addInput("=")),
+                ButtonWidget(label: 'sin', color: Colors.purple, onTap: () => calculator.addInput('sin')),
+                ButtonWidget(label: 'cos', color: Colors.purple, onTap: () => calculator.addInput('cos')),
+                ButtonWidget(label: 'tan', color: Colors.purple, onTap: () => calculator.addInput('tan')),
+                ButtonWidget(label: 'log', color: Colors.purple, onTap: () => calculator.addInput('log')),
+                ButtonWidget(label: 'ln', color: Colors.purple, onTap: () => calculator.addInput('ln')),
+                ButtonWidget(label: '√', color: Colors.purple, onTap: () => calculator.addInput('√')),
+                ButtonWidget(label: '^', color: Colors.purple, onTap: () => calculator.addInput('^')),
               ],
             ),
-          ),
         ],
       ),
     );
