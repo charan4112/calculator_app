@@ -41,44 +41,12 @@ class HomeScreen extends StatelessWidget {
           // Display Area
           Container(
             padding: const EdgeInsets.all(20),
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Colors.white.withOpacity(0.2)),
-            ),
             alignment: Alignment.bottomRight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  calculator.input,
-                  style: TextStyle(fontSize: 28, color: calculator.isDarkMode ? Colors.white : Colors.black),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  calculator.output,
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: calculator.isDarkMode ? Colors.white : Colors.black),
-                ),
-              ],
+            child: Text(
+              calculator.input,
+              style: TextStyle(fontSize: 30, color: calculator.isDarkMode ? Colors.white : Colors.black),
             ),
           ),
-
-          // Scientific Mode Toggle Buttons
-          if (calculator.isScientificMode)
-            Wrap(
-              spacing: 10,
-              children: [
-                ButtonWidget(label: 'sin', color: Colors.purple, onTap: () => calculator.addInput('sin')),
-                ButtonWidget(label: 'cos', color: Colors.purple, onTap: () => calculator.addInput('cos')),
-                ButtonWidget(label: 'tan', color: Colors.purple, onTap: () => calculator.addInput('tan')),
-                ButtonWidget(label: 'log', color: Colors.purple, onTap: () => calculator.addInput('log')),
-                ButtonWidget(label: 'ln', color: Colors.purple, onTap: () => calculator.addInput('ln')),
-                ButtonWidget(label: '√', color: Colors.purple, onTap: () => calculator.addInput('√')),
-                ButtonWidget(label: '^', color: Colors.purple, onTap: () => calculator.addInput('^')),
-              ],
-            ),
         ],
       ),
     );

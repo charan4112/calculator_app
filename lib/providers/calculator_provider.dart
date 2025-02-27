@@ -28,8 +28,7 @@ class CalculatorProvider extends ChangeNotifier {
 
     if (value == "=") {
       _calculateResult();
-    } else if (value == "sin" || value == "cos" || value == "tan" || 
-               value == "log" || value == "ln" || value == "√" || value == "^") {
+    } else if (["sin", "cos", "tan", "log", "ln", "√", "^"].contains(value)) {
       _handleScientificOperation(value);
     } else {
       _input += value;
@@ -54,9 +53,7 @@ class CalculatorProvider extends ChangeNotifier {
 
       _output = eval.toStringAsFixed(6);
       _history.insert(0, "$_input = $_output");
-      if (_history.length > 10) {
-        _history.removeLast();
-      }
+      if (_history.length > 10) _history.removeLast();
     } catch (e) {
       _output = "Error";
     }
@@ -67,21 +64,12 @@ class CalculatorProvider extends ChangeNotifier {
     try {
       double num = double.tryParse(_input) ?? 0.0;
 
-      if (operation == "sin") {
-        _output = sin(num * pi / 180).toStringAsFixed(6);
-      } else if (operation == "cos") {
-        _output = cos(num * pi / 180).toStringAsFixed(6);
-      } else if (operation == "tan") {
-        _output = tan(num * pi / 180).toStringAsFixed(6);
-      } else if (operation == "log") {
-        _output = log(num) / log(10).toStringAsFixed(6);
-      } else if (operation == "ln") {
-        _output = log(num).toStringAsFixed(6);
-      } else if (operation == "√") {
-        _output = sqrt(num).toStringAsFixed(6);
-      } else if (operation == "^") {
-        _output += "^";
-      }
+      if (operation == "sin") _output = sin(num * pi / 180).toStringAsFixed(6);
+      if (operation == "cos") _output = cos(num * pi / 180).toStringAsFixed(6);
+      if (operation == "tan") _output = tan(num * pi / 180).toStringAsFixed(6);
+      if (operation == "log") _output = (log(num) / log(10)).toStringAsFixed(6);
+      if (operation == "ln") _output = log(num).toStringAsFixed(6);
+      if (operation == "√") _output = sqrt(num).toStringAsFixed(6);
 
       _input = _output;
     } catch (e) {
@@ -90,13 +78,11 @@ class CalculatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Toggle Scientific Mode
   void toggleScientificMode() {
     _isScientificMode = !_isScientificMode;
     notifyListeners();
   }
 
-  // Memory Functions
   void memoryClear() {
     _memory = 0.0;
     notifyListeners();
@@ -117,13 +103,11 @@ class CalculatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Clear History
   void clearHistory() {
     _history.clear();
     notifyListeners();
   }
 
-  // Theme Toggle
   void toggleTheme() {
     _isDarkMode = !_isDarkMode;
     _saveThemePreference();
